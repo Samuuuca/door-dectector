@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da TV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex flex-col items-center justify-center font-sans p-6">
+
+    <h1 class="text-4xl text-gray-100 font-bold mb-10 tracking-wider shadow-sm">
+        SISTEMA DE MÍDIA
+    </h1>
+
+    <!-- Grade de Botões Principais -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+        
+        <!-- CAMERA -->
+        <button onclick="playCamera()" class="h-40 flex flex-col items-center justify-center bg-gray-800 border border-gray-700 rounded-2xl shadow-lg hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-200 group">
+            <span class="text-5xl mb-3">📷</span>
+            <span class="text-gray-200 font-semibold text-xl tracking-wide group-hover:text-white">Câmera</span>
+        </button>
+
+        <!-- TELEVISAO (Abre o Modal) -->
+        <button onclick="openModal()" class="h-40 flex flex-col items-center justify-center bg-gray-800 border border-gray-700 rounded-2xl shadow-lg hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-200 group">
+            <span class="text-5xl mb-3">📺</span>
+            <span class="text-gray-200 font-semibold text-xl tracking-wide group-hover:text-white">Televisão</span>
+        </button>
+
+        <!-- YOUTUBE -->
+        <button onclick="playYouTube()" class="h-40 flex flex-col items-center justify-center bg-gray-800 border border-gray-700 rounded-2xl shadow-lg hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-200 group">
+            <span class="text-5xl mb-3">▶️</span>
+            <span class="text-gray-200 font-semibold text-xl tracking-wide group-hover:text-white">YouTube</span>
+        </button>
+
+    </div>
+
+    <!-- Botão de Parar Tudo -->
+    <button onclick="stopMedia()" class="mt-12 px-10 py-4 bg-red-600/90 text-white text-lg font-bold rounded-xl hover:bg-red-500 hover:scale-105 shadow-red-900/50 shadow-lg transition-all duration-200">
+        ⏹ Parar Transmissão
+    </button>
+
+    <!-- MODAL DE CANAIS (Escondido por padrão) -->
+    <div id="tvModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-gray-800 w-11/12 max-w-md rounded-2xl p-6 border border-gray-700 shadow-2xl">
+            <h2 class="text-2xl text-white font-bold mb-6 text-center">Selecione o Canal</h2>
+            
+            <!-- Lista de Canais -->
+            <div class="flex flex-col gap-3 max-h-96 overflow-y-auto">
+                <button onclick="playIPTV('http://link-do-seu-iptv.com/globo.m3u8')" class="p-4 bg-gray-700 text-gray-200 rounded-xl font-medium hover:bg-blue-500 hover:text-white transition-colors text-left text-lg">
+                    🌐 Globo
+                </button>
+                <button onclick="playIPTV('http://link-do-seu-iptv.com/sbt.m3u8')" class="p-4 bg-gray-700 text-gray-200 rounded-xl font-medium hover:bg-blue-500 hover:text-white transition-colors text-left text-lg">
+                    📺 SBT
+                </button>
+                <button onclick="playIPTV('http://link-do-seu-iptv.com/corinthians-tv.m3u8')" class="p-4 bg-gray-700 text-gray-200 rounded-xl font-medium hover:bg-blue-500 hover:text-white transition-colors text-left text-lg">
+                    🦅 Corinthians TV
+                </button>
+                <button onclick="playIPTV('http://link-do-seu-iptv.com/sportv.m3u8')" class="p-4 bg-gray-700 text-gray-200 rounded-xl font-medium hover:bg-blue-500 hover:text-white transition-colors text-left text-lg">
+                    ⚽ SporTV
+                </button>
+            </div>
+
+            <!-- Botão de Fechar Modal -->
+            <button onclick="closeModal()" class="mt-6 w-full py-4 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-500 transition-colors">
+                Voltar
+            </button>
+        </div>
+    </div>
+
+    <!-- Importa a lógica -->
+    <script src="app.js"></script>
+</body>
+</html>
