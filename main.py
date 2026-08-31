@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 RTSP_URL = os.getenv("RTSP_URL")
 
+
 app = FastAPI(title="Dashboard Media Center")
 
 # Configuração de CORS para permitir requisições do frontend
@@ -25,7 +26,8 @@ class ChannelRequest(BaseModel):
 
 def kill_current_media():
     """Encerra processos de vídeo abertos para evitar sobreposição de áudio/vídeo."""
-    os.system("killall -9 vlc cvlc chromium-browser 2>/dev/null")
+    os.system("killall -9 vlc cvlc 2>/dev/null")
+    os.system("pkill -9 -f chromium 2>/dev/null")
 
 def get_display_env():
     """Garante que as aplicações abram na tela da TV conectada ao servidor."""
@@ -39,7 +41,7 @@ def play_camera():
         return {"error": "URL da câmera não configurada no .env"}
         
     subprocess.Popen(
-        ["cvlc", "--fullscreen", "--no-osd", "--no-video-title-show", RTSP_URL],
+        ["/snap/bin/vlc", "--fullscreen", "--no-osd", "--no-video-title-show" ,RTSP_URL],
         env=get_display_env()
     )
     return {"status": "Câmera iniciada"}
@@ -49,7 +51,7 @@ def play_iptv(request: ChannelRequest):
     kill_current_media()
     
     subprocess.Popen(
-        ["cvlc", "--fullscreen", "--no-osd", "--no-video-title-show", request.url],
+        ["cvlc", "--fullscreen", "--no-osd", "--no-video-title-show", "--aout=alsa", "--alsa-audio-device=plughw:0,3", request.url],
         env=get_display_env()
     )
     return {"status": f"Canal iniciado: {request.url}"}
@@ -61,9 +63,8 @@ def play_youtube():
     ua_tv = "Mozilla/5.0 (SMART-TV; Linux; Tizen 5.0) AppleWebKit/538.1 (KHTML, like Gecko) Version/5.0 NativeTV/5.0.0"
     
     subprocess.Popen([
-        "chromium-browser",
+        "chromium",
         "--kiosk",
-        "--incognito",
         "--disable-infobars",
         f"--user-agent={ua_tv}",
         "https://www.youtube.com/tv"

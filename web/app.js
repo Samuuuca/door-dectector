@@ -1,5 +1,5 @@
 // Substitua pelo IP real do seu Ubuntu Server
-const API_URL = "http://192.168.0.XXX:8000";
+const API_URL = "http://192.168.2.10:8000";
 
 async function sendCommand(endpoint, body = null) {
     try {
